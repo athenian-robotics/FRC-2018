@@ -1,0 +1,1 @@
+This folder contains the output files of the FRC commands executed in /etc/rc.local

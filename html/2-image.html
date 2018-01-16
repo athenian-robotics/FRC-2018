@@ -1,0 +1,212 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta HTTP-EQUIV="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta HTTP-EQUIV="Pragma" content="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+
+    <title>_TITLE_</title>
+
+    <style>
+        body {background-color: #996F51;}
+
+        .header {
+            color: white;
+            font-size: 25px;
+            text-decoration: bold;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+        }
+
+        .status {
+            color: white;
+            font-size: 15px;
+            margin-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .image {
+            align: left;
+            border: 4px solid #FF3B22;
+            cursor: pointer;
+        }
+
+        .image:active {
+          box-shadow: 0 5px #666;
+          transform: translateY(4px);
+        }
+
+        .pause {
+            color: white;
+            border: 1px solid black;
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .pause:active {
+          box-shadow: 0 5px #666;
+          transform: translateY(4px);
+        }
+
+        .refresh {
+            color: white;
+            background-color: #CC5706;
+            border: 1px solid black;
+            border-radius: 8px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .refresh:active {
+          box-shadow: 0 5px #666;
+          transform: translateY(4px);
+        }
+    </style>
+
+    <script>
+        var red = '#FF3B22'
+        var green = '#14CC06'
+        var paused = [false, false];
+        var urls = ['http://camera-gear.local:5800/image.jpg', 'http://camera-rope.local:5800/image.jpg']
+        var names = ['gear', 'rope']
+
+        window.onload = function () {
+            document.getElementById('header_0').innerHTML = 'Gear Camera (_DELAY_SECS_ secs)';
+            setButton(0);
+            loadImage(0);
+
+            document.getElementById('header_1').innerHTML = 'Rope Camera (_DELAY_SECS_ secs)';
+            setButton(1);
+            loadImage(1);
+        };
+
+        function loadImage(num) {
+            if (!(paused[num])) {
+                var warning = document.getElementById('status_' + num)
+                var image = new Image();
+                image.onload = function(){
+                    warning.innerHTML = 'Connected to ' + names[num] + ' camera';
+                    warning.style.backgroundColor = green
+                    img = document.getElementById('image_' + num);
+                    img.getContext('2d').drawImage(image, 0, 0);
+                    setTimeout(function(){ loadImage(num); }, _DELAY_SECS_ * 1000);
+                };
+                image.onerror = function(){
+                    warning.innerHTML = 'Disconnected from ' + names[num] + ' camera';
+                    warning.style.backgroundColor = red
+                    setTimeout(function(){ loadImage(num); },  1000);
+                }
+                image.src = urls[num];
+            }
+        }
+
+        function setButton(num) {
+            var color = paused[num] ? red : green
+            var button = document.getElementById('pause_' + num);
+            button.style.backgroundColor = color;
+            button.value = paused[num] ? 'Resume' : 'Pause';
+
+            var img = document.getElementById('image_' + num);
+            img.style.borderColor = color;
+        }
+
+        function togglePause(num) {
+            paused[num] = !(paused[num])
+            setButton(num)
+            loadImage(num);
+        }
+
+        function refreshDelay(time) {
+            window.location.href = '/image?delay=' + time;
+        }
+    </script>
+</head>
+
+<body>
+
+<table class="buttons" border="0">
+    <tr>
+        <td>
+            <input type="button" class="refresh" value="0 secs" onclick="refreshDelay('0')">
+        </td>
+        <td>
+            <input type="button" class="refresh" value="0.1 secs" onclick="refreshDelay('0.1')">
+        </td>
+        <td>
+            <input type="button" class="refresh" value="0.25 secs" onclick="refreshDelay('0.25')">
+        </td>
+        <td>
+            <input type="button" class="refresh" value="0.5 secs" onclick="refreshDelay('0.5')">
+        </td>
+        <td>
+            <input type="button" class="refresh" value="1 secs" onclick="refreshDelay('1')">
+        </td>
+        <td>
+            <input type="button" class="refresh" value="5 secs" onclick="refreshDelayrefreshDelay('5')">
+        </td>
+    </tr>
+</table>
+
+<table border="0">
+    <tr>
+        <td>
+            <table border="0">
+                <tr>
+                    <td>
+                        <p class="header" id="header_0"></p>
+                    </td>
+                    <td>
+                        <p class="status" id="status_0"></p>
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <canvas class="image" id="image_0" width="_WIDTH_px" height="_HEIGHT_px"
+                        onclick="togglePause(0)"></canvas>
+                <div>
+                    <input type="button" class="pause" id="pause_0" value="Pause" onclick="togglePause(0)">
+                </div>
+            </div>
+        </td>
+        <td>
+            <table border="0">
+                <tr>
+                    <td>
+                        <p class="header" id="header_1"></p>
+                    </td>
+                    <td>
+                        <p class="status" id="status_1"></p>
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <canvas class="image" id="image_1" width="_WIDTH_px" height="_HEIGHT_px"
+                        onclick="togglePause(1)"></canvas>
+            </div>
+            <div>
+                <input type="button" class="pause" id="pause_1" value="Pause" onclick="togglePause(1)">
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+
+</html>

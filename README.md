@@ -1,5 +1,23 @@
 # FRC 2018
 
+## Docs
+
+### SSH Setup
+* [Using SSH without a password](http://www.athenian-robotics.org/ssh/#using-ssh-without-a-password)
+* [SSH configuration file](docs/SSH-configuration-file.md)
+
+### Raspi Git Setup 
+* [OSX configuration for remote repos](docs/OSX-configuration-for-remote-repos.md)
+* [Raspi configuration for remote repos](docs/Raspi-configuration-for-remote-repos.md)
+
+### Program control
+* [Makefile commands](docs/Makefile-commands.md)
+* [Raspi boot scripts](docs/Raspi-boot-scripts.md)
+
+### Nginx Setup
+* [Nginx config file](docs/Nginx-config-file.md)
+* [Nginx admin](docs/Nginx-admin.md)
+
 
 ## Robot Details
 

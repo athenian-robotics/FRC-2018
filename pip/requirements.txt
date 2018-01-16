@@ -1,0 +1,6 @@
+grpcio
+flask
+requests
+pyserial
+
+blinkt
