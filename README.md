@@ -16,9 +16,8 @@
 * [Nginx config file](docs/Nginx-config-file.md)
 * [Nginx admin](docs/Nginx-admin.md)
 
-
 ## Robot Config
-* [Robot Network]()
+* [Robot Network](http://www.athenian-robotics.org/frc/#robot-network)
 
 ## Sensor Enclosures
 * [Double-ended Lidar enclosure](https://cad.onshape.com/documents/58b730cb89d5420f7adf7e88/w/18027186b99b15b0f58beac0/e/c926ed63410214563ce7d37c).
