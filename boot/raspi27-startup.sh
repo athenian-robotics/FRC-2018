@@ -5,8 +5,8 @@
 # the other needs to be commented out.
 
 # Object tracking
-su - pi -c ~pi/git/FRC-2017/bin/picamera-object-tracker.sh
+su - pi -c ~pi/git/FRC-2018/bin/picamera-object-tracker.sh
 
 # MQTT publishing
-#su - pi -c ~pi/git/FRC-2017/bin/gear-front-publisher.sh
+#su - pi -c ~pi/git/FRC-2018/bin/gear-front-publisher.sh
 

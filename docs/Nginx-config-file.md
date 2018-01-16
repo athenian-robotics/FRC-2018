@@ -3,8 +3,8 @@ server {
     listen 5800;
     server_name _;
 
-    #access_log /home/pi/git/FRC-2017/logs/nginx-access.log;
-    error_log  /home/pi/git/FRC-2017/logs/nginx-errors.log;
+    #access_log /home/pi/git/FRC-2018/logs/nginx-access.log;
+    error_log  /home/pi/git/FRC-2018/logs/nginx-errors.log;
 
     location / {
         proxy_pass http://127.0.0.1:8080;

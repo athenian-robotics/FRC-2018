@@ -1,31 +1,31 @@
-### FRC-2017 Repo
+### FRC-2018 Repo
 
 Setup a bare repo and a source directory:
 
 ```bash
 $ cd ~/git
-$ mkdir FRC-2017
-$ mkdir FRC-2017.git
-$ git init --bare ~/git/FRC-2017.git
+$ mkdir FRC-2018
+$ mkdir FRC-2018.git
+$ git init --bare ~/git/FRC-2018.git
 ```
 
-Edit *FRC-2017.git/hooks/post-receive* and put this into it: 
+Edit *FRC-2018.git/hooks/post-receive* and put this into it: 
 
 ```bash
 #!/usr/bin/env sh
-git --work-tree=/home/pi/git/FRC-2017 --git-dir=/home/pi/git/FRC-2017.git checkout -f
-echo "*** Updated FRC-2017 ***" >&2
+git --work-tree=/home/pi/git/FRC-2018 --git-dir=/home/pi/git/FRC-2018.git checkout -f
+echo "*** Updated FRC-2018 ***" >&2
 ```
 
 Make *post-receive* executable:
 ```bash
-$ chmod +x ~/gitFRC-2017.git/hooks/post-receive
+$ chmod +x ~/gitFRC-2018.git/hooks/post-receive
 ```
 Adjust the git config on your Mac (change raspiXX to your raspi hostname):
 
 ```bash
-$ cd ~/git/FRC-2017
-$ git remote add raspiXX pi@raspiXX.local:/home/pi/git/FRC-2017.git
+$ cd ~/git/FRC-2018
+$ git remote add raspiXX pi@raspiXX.local:/home/pi/git/FRC-2018.git
 ```
 
 Push to the Raspi:

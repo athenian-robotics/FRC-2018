@@ -2,8 +2,8 @@ The following Makefile commands are available:
 
 | Command            | Description                      |
 |:-------------------|:---------------------------------|
-|`make github-push`  | Pushes to *common-robotics*, *FRC-2017*, *FRC-2017-robot* and *object-tracking* repos on github (must be connected to *TASGUEST*)|
-|`make github-pull`  | Pulls from *common-robotics*, *FRC-2017*, *FRC-2017-robot* and *object-tracking* repos on github (must be connected to *TASGUEST*)|
+|`make github-push`  | Pushes to *common-robotics*, *FRC-2018*, *FRC-2018-robot* and *object-tracking* repos on github (must be connected to *TASGUEST*)|
+|`make github-pull`  | Pulls from *common-robotics*, *FRC-2018*, *FRC-2018-robot* and *object-tracking* repos on github (must be connected to *TASGUEST*)|
 |`make robot`        | Pushes to the Raspis on the robot (must be connected to *852*) |
 |`make reboot`       | Reboots the Raspis on the robot (must be connected to *852*) |
 |`make shutdown`     | Shuts down the Raspis on the robot (must be connected to *852*) |
