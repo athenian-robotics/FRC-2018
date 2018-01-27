@@ -6,7 +6,6 @@ import logging
 import cli_args as cli
 from constants import *
 from moving_average import MovingAverage
-from mqtt_connection import MqttConnection, PAHO_CLIENT
 from out_of_range_values import OutOfRangeValues
 from serial_reader import SerialReader
 from utils import setup_logging, waitForKeyboardInterrupt
