@@ -96,10 +96,6 @@ if __name__ == "__main__":
                       port=SerialReader.lookup_port(args[DEVICE_ID]) if args.get(DEVICE_ID) else args[SERIAL_PORT],
                       baudrate=args[BAUD_RATE],
                       debug=True):
-        with MqttConnection(hostname=args[MQTT_HOST],
-                            userdata=userdata,
-                            on_connect=on_connect,
-                            on_message=frc_utils.on_message):
-            waitForKeyboardInterrupt()
+        waitForKeyboardInterrupt()
 
     logger.info("Exiting...")
