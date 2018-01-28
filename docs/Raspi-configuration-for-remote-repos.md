@@ -16,6 +16,7 @@ Edit *FRC-2018.git/hooks/post-receive* and put this into it:
 git --work-tree=/home/pi/git/FRC-2018 --git-dir=/home/pi/git/FRC-2018.git checkout -f
 echo "*** Updated FRC-2018 ***" >&2
 ```
+**Warning** Use the absolute pathnames here.
 
 Make *post-receive* executable:
 ```bash
