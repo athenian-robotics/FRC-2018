@@ -60,8 +60,7 @@ def fetch_data(mm_str, userdata):
                 print('Published data to ros')
                 rate.sleep()
         else:
-            print('trying to publish'
-                  '')
+            print('trying to publish')
             publisher.publish(mm)
             print('Publish')
             rate.sleep()
