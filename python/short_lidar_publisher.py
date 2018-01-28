@@ -31,6 +31,7 @@ def fetch_data(mm_str, userdata):
     rate = userdata[ROS_RATE]
 
     if not userdata[frc_utils.ENABLED]:
+        print("User data doesn't exist")
         return
 
     # Values sometimes get compacted together, take the later value if that happens since it's newer
@@ -38,12 +39,14 @@ def fetch_data(mm_str, userdata):
         mm_str = mm_str.split("\r")[1]
 
     mm = int(mm_str)
+    print('Made mm a string')
 
     if oor_upper > 0 and (mm <= 155 or mm > oor_upper):
         # Filter out bad data
         oor_values.mark()
         if oor_values.is_out_of_range(userdata[OOR_TIME]):
             oor_values.clear()
+            print("out of range")
             publisher.publish(ROS_OOR)
             rate.sleep()
     else:
@@ -51,6 +54,7 @@ def fetch_data(mm_str, userdata):
             moving_avg.add(mm)
             avg = moving_avg.average()
             if not avg or abs(mm - avg) > TOLERANCE_THRESH:
+                print("trying to publish")
                 publisher.publish(mm)
                 print('Published data to ros')
                 rate.sleep()
