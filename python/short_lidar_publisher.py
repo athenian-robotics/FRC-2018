@@ -71,12 +71,13 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--device", dest=DEVICE, required=True, help="Device ('left' or 'right'")
     cli.verbose(parser)
     args = vars(parser.parse_args())
-
+    logger.info('Parsed all args')
     # Setup logging
     setup_logging(level=args[LOG_LEVEL])
     rospy.init_node('short_lidar_publisher')
     pub = rospy.Publisher('short_lidar', Int32, queue_size=10)
     rate = rospy.Rate(2)
+    logger.info('Setup publisher')
     userdata = {TOPIC: "lidar/{0}/mm".format(args[DEVICE]),
                 COMMAND: "lidar/{0}/command".format(args[DEVICE]),
                 ENABLED: True,
