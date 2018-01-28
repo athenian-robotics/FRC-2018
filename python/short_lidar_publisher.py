@@ -48,6 +48,7 @@ def fetch_data(mm_str, userdata):
             oor_values.clear()
             print("out of range")
             publisher.publish(ROS_OOR)
+            print("Publish out of range")
             rate.sleep()
     else:
         if USE_AVG:
