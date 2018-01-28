@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 def fetch_data(mm_str, userdata):
+    logger.info('Enter fetch data function')
     publisher = userdata[ROS_PUBLISHER]
     moving_avg = userdata[MOVING_AVERAGE]
     oor_values = userdata[OOR_VALUES]
@@ -44,12 +45,15 @@ def fetch_data(mm_str, userdata):
         if oor_values.is_out_of_range(userdata[OOR_TIME]):
             oor_values.clear()
             publisher.publish(ROS_OOR)
+            rate.sleep()
     else:
         if USE_AVG:
             moving_avg.add(mm)
             avg = moving_avg.average()
             if not avg or abs(mm - avg) > TOLERANCE_THRESH:
                 publisher.publish(mm)
+                logger.info('Published data to ros')
+                rate.sleep()
         else:
             publisher.publish(mm)
             rate.sleep()
@@ -83,6 +87,7 @@ if __name__ == "__main__":
                 ROS_PUBLISHER: pub,
                 ROS_RATE: rate
                 }
+    logger.info('Defined userdata')
 
     with SerialReader(func=fetch_data,
                       userdata=userdata,
