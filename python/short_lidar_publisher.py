@@ -63,6 +63,7 @@ def fetch_data(mm_str, userdata):
             "Average isn't working"
     else:
         print('trying to publish')
+        print(publisher)
         publisher.publish(mm)
         print('Publish')
         rate.sleep()
