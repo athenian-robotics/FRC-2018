@@ -22,11 +22,6 @@ USE_AVG = False
 logger = logging.getLogger(__name__)
 
 
-def on_connect(mqtt_client, userdata, flags, rc):
-    logger.info("Connected with result code: %s", rc)
-    mqtt_client.subscribe(userdata[COMMAND])
-
-
 def fetch_data(mm_str, userdata):
     publisher = userdata[ROS_PUBLISHER]
     moving_avg = userdata[MOVING_AVERAGE]
@@ -63,7 +58,6 @@ def fetch_data(mm_str, userdata):
 if __name__ == "__main__":
     # Parse CLI args
     parser = argparse.ArgumentParser()
-    cli.mqtt_host(parser)
     cli.device_id(parser)
     cli.serial_port(parser)
     cli.baud_rate(parser)
