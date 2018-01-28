@@ -89,6 +89,7 @@ if __name__ == "__main__":
                 ROS_RATE: rate
                 }
     print('Defined userdata')
+    print('Opening serial with port: ' + SerialReader.lookup_port(args[DEVICE_ID]))
 
     with SerialReader(func=fetch_data,
                       userdata=userdata,
