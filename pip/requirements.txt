@@ -4,3 +4,8 @@ requests
 pyserial
 
 blinkt
+
+pyyaml
+prometheus_client
+catkin_pkg
+rospkg
