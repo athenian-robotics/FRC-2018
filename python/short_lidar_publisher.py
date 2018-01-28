@@ -59,6 +59,8 @@ def fetch_data(mm_str, userdata):
                 publisher.publish(mm)
                 print('Published data to ros')
                 rate.sleep()
+            else:
+                "Average isn't working"
         else:
             print('trying to publish')
             publisher.publish(mm)
