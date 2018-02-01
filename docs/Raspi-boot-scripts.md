@@ -27,11 +27,6 @@ workon py2cv3
 date > ~pi/git/FRC-2018/logs/object-tracker.reboot
 ```
 
-* *$PYTHONPATH* must be set appropriately to include dependent packages:
-```bash
-export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics:~pi/git/object-tracking
-```
-
 * The *stdout* and *stderr* are included in the log file by using `&>`. It is critical that each shell script
 be forked with a trailing `&`:
 ```bash
@@ -44,6 +39,5 @@ python2 ~pi/git/object-tracking/object_tracker.py --bgr "174, 56, 5" --width 400
 source ~pi/.profile
 workon py2cv3
 date > ~pi/git/FRC-2018/logs/object-tracker.reboot
-export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics:~pi/git/object-tracking
 python2 ~pi/git/object-tracking/single_object_tracker.py --bgr "174, 56, 5" --width 400 --delay 0.25 --flipy --usb --http "camera-gear.local:8080" &> ~pi/git/FRC-2018/logs/object-tracker.out &
 ```

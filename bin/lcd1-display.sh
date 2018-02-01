@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 date > ~pi/git/FRC-2018/logs/lcd_writer.reboot
-export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics
+#export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics
 
 # Old
 #python3 ~pi/git/FRC-2018/lidar_display.py --mqtt mqtt-turtle.local &> ~pi/git/FRC-2018/logs/lidar_display.out &

@@ -3,12 +3,12 @@
 import argparse
 import logging
 
-import cli_args as cli
-from constants import *
-from moving_average import MovingAverage
-from out_of_range_values import OutOfRangeValues
-from serial_reader import SerialReader
-from utils import setup_logging, waitForKeyboardInterrupt
+import arc852.cli_args as cli
+from arc852.constants import *
+from arc852.moving_average import MovingAverage
+from arc852.out_of_range_values import OutOfRangeValues
+from arc852.serial_reader import SerialReader
+from arc852.utils import setup_logging, waitForKeyboardInterrupt
 
 import frc_utils
 from frc_utils import *
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     cli.oor_time(parser)
     cli.oor_upper(parser)
     parser.add_argument("-d", "--device", dest=DEVICE, required=True, help="Device ('left' or 'right'")
-    cli.verbose(parser)
+    cli.log_level(parser)
     args = vars(parser.parse_args())
     print('Parsed all args')
     # Setup logging

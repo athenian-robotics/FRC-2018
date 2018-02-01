@@ -3,13 +3,13 @@
 import argparse
 import logging
 
-import cli_args as cli
-from constants import SERIAL_PORT, BAUD_RATE, MQTT_HOST, LOG_LEVEL, TOPIC, DEVICE_ID, OOR_SIZE, OOR_TIME, OOR_UPPER
-from moving_average import MovingAverage
-from mqtt_connection import MqttConnection, PAHO_CLIENT
-from out_of_range_values import OutOfRangeValues
-from serial_reader import SerialReader
-from utils import setup_logging, waitForKeyboardInterrupt
+import arc852.cli_args as cli
+from arc852.constants import SERIAL_PORT, BAUD_RATE, MQTT_HOST, LOG_LEVEL, TOPIC, DEVICE_ID, OOR_SIZE, OOR_TIME, OOR_UPPER
+from arc852.moving_average import MovingAverage
+from arc852.mqtt_connection import MqttConnection, PAHO_CLIENT
+from arc852.out_of_range_values import OutOfRangeValues
+from arc852.serial_reader import SerialReader
+from arc852.utils import setup_logging, waitForKeyboardInterrupt
 
 import frc_utils
 from frc_utils import MOVING_AVERAGE, OOR_VALUES, OUT_OF_RANGE, DEVICE, COMMAND, ENABLED
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     cli.oor_time(parser)
     cli.oor_upper(parser)
     parser.add_argument("-d", "--device", dest=DEVICE, required=True, help="Device ('left' or 'right'")
-    cli.verbose(parser)
+    cli.log_level(parser)
     args = vars(parser.parse_args())
 
     # Setup logging

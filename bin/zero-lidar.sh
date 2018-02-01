@@ -2,7 +2,7 @@
 
 date > ~pi/git/FRC-2018/logs/zero-lidar.reboot
 export PYTHONWARNINGS="ignore"
-export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics
+#export PYTHONPATH=${PYTHONPATH}:~pi/git/common-robotics
 export GOPATH=~pi/go
 export GOBIN=~pi/go/bin
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

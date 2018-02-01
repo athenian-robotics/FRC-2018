@@ -6,13 +6,13 @@ import time
 from threading import Lock
 from threading import Thread
 
-import cli_args as cli
-from constants import SERIAL_PORT, BAUD_RATE, MQTT_HOST, LOG_LEVEL, DEVICE_ID
-from mqtt_connection import MqttConnection, PAHO_CLIENT
-from serial_reader import SerialReader
-from utils import current_time_millis
-from utils import setup_logging
-from utils import sleep
+import arc852.cli_args as cli
+from arc852.constants import SERIAL_PORT, BAUD_RATE, MQTT_HOST, LOG_LEVEL, DEVICE_ID
+from arc852.mqtt_connection import MqttConnection, PAHO_CLIENT
+from arc852.serial_reader import SerialReader
+from arc852.utils import current_time_millis
+from arc852.utils import setup_logging
+from arc852.utils import sleep
 
 import frc_utils
 from frc_utils import COMMAND
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     parser.add_argument("--calib", dest=CALIB_ENABLED, default=False, action="store_true",
                         help="Enable calibration publishing[false]")
     parser.add_argument("--cpt", dest=CALIB_PUBLISH, default=3, type=int, help="Calibration publishing time secs [3]")
-    cli.verbose(parser)
+    cli.log_level(parser)
     args = vars(parser.parse_args())
 
     # Setup logging

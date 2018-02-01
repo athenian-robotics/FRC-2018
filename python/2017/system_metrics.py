@@ -6,10 +6,10 @@ import time
 from threading import Lock
 from threading import Thread
 
-import cli_args as cli
-from constants import MQTT_HOST
-from mqtt_connection import MqttConnection
-from utils import waitForKeyboardInterrupt
+import arc852.cli_args as cli
+from arc852.constants import MQTT_HOST
+from arc852.mqtt_connection import MqttConnection
+from arc852.utils import waitForKeyboardInterrupt
 
 messages = 0
 
