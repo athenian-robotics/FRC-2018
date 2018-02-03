@@ -5,13 +5,13 @@ import time
 from collections import deque
 from threading import Thread
 
-import cli_args as cli
+import arc852.cli_args as cli
 import dothat.backlight as backlight
 import dothat.lcd as lcd
 import dothat.touch as nav
-from constants import MQTT_HOST, LOG_LEVEL
-from mqtt_connection import MqttConnection
-from utils import setup_logging, waitForKeyboardInterrupt
+from arc852.constants import MQTT_HOST, LOG_LEVEL
+from arc852.mqtt_connection import MqttConnection
+from arc852.utils import setup_logging, waitForKeyboardInterrupt
 
 from heading_publisher import CALIBRATION_BY_VALUES
 
@@ -173,7 +173,7 @@ def handle_down_button(ch, evt):
 
 if __name__ == "__main__":
     # Parse CLI args
-    args = cli.setup_cli_args(cli.mqtt_host, cli.verbose)
+    args = cli.setup_cli_args(cli.mqtt_host, cli.log_level())
 
     # Setup logging
     setup_logging(level=args[LOG_LEVEL])

@@ -4,12 +4,12 @@ import logging
 import time
 from threading import Thread
 
-import cli_args as cli
-from cli_args import setup_cli_args
-from constants import MQTT_HOST, LOG_LEVEL, GRPC_HOST, TOPIC, MQTT_TOPIC
+import arc852.cli_args as cli
+from arc852.cli_args import setup_cli_args
+from arc852.constants import MQTT_HOST, LOG_LEVEL, GRPC_HOST, TOPIC, MQTT_TOPIC
 from location_client import LocationClient
-from mqtt_connection import MqttConnection
-from utils import setup_logging, waitForKeyboardInterrupt
+from arc852.mqtt_connection import MqttConnection
+from arc852.utils import setup_logging, waitForKeyboardInterrupt
 
 import frc_utils
 from frc_utils import COMMAND, ENABLED
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     # Parse CLI args
-    args = setup_cli_args(cli.grpc_host, cli.mqtt_host, cli.mqtt_topic, cli.verbose)
+    args = setup_cli_args(cli.grpc_host, cli.mqtt_host, cli.mqtt_topic, cli.log_level())
 
     # Setup logging
     setup_logging(level=args[LOG_LEVEL])

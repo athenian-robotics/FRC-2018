@@ -3,10 +3,10 @@ import logging
 import time
 from threading import Thread
 
-import cli_args as cli
-from constants import MQTT_HOST
-from mqtt_connection import MqttConnection
-from utils import waitForKeyboardInterrupt
+import arc852.cli_args as cli
+from arc852.constants import MQTT_HOST
+from arc852.mqtt_connection import MqttConnection
+from arc852.utils import waitForKeyboardInterrupt
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     # Parse CLI args
     parser = argparse.ArgumentParser()
     cli.mqtt_host(parser)
-    cli.verbose(parser)
+    cli.log_level(parser)
     args = vars(parser.parse_args())
 
     with MqttConnection(hostname=args[MQTT_HOST],

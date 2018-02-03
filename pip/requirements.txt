@@ -1,11 +1,7 @@
+arc852-robotics
 grpcio
-flask
-requests
-pyserial
-
 blinkt
 
 pyyaml
-prometheus_client
 catkin_pkg
 rospkg

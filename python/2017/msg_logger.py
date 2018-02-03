@@ -2,10 +2,10 @@ import argparse
 import datetime
 import logging
 
-import cli_args as cli
-from constants import MQTT_HOST, LOG_LEVEL
-from mqtt_connection import MqttConnection
-from utils import setup_logging, waitForKeyboardInterrupt
+import arc852.cli_args as cli
+from arc852.constants import MQTT_HOST, LOG_LEVEL
+from arc852.mqtt_connection import MqttConnection
+from arc852.utils import setup_logging, waitForKeyboardInterrupt
 
 DIR = "dir"
 LOG = "log"
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     cli.mqtt_host(parser)
     parser.add_argument("-d", "--dir", dest=DIR, required=True, help="Log directory")
-    cli.verbose(parser)
+    cli.log_level(parser)
     args = vars(parser.parse_args())
 
     # Setup logging
