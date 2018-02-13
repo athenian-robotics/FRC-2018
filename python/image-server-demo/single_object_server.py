@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     image_source = CameraImageSource(usb_camera=args[USB_CAMERA], usb_port=args[USB_PORT])
 
-    image_server = ImageServer(http_file=args[HTTP_FILE],
+    image_server = ImageServer(template_file=args[HTTP_FILE],
                                camera_name=args[CAMERA_NAME],
                                http_host=args[HTTP_HOST],
                                http_delay_secs=args[HTTP_DELAY_SECS],

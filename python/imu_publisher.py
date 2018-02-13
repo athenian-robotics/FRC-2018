@@ -5,17 +5,15 @@ import logging
 from threading import Lock
 
 import arc852.cli_args as cli
-from arc852.constants import SERIAL_PORT, BAUD_RATE, MQTT_HOST, LOG_LEVEL, DEVICE_ID
+import rospy
+from arc852.constants import SERIAL_PORT, BAUD_RATE, LOG_LEVEL, DEVICE_ID
 from arc852.serial_reader import SerialReader
 from arc852.utils import setup_logging
 from arc852.utils import sleep
+from std_msgs.msg import Int32
 
-import frc_utils
 from frc_utils import COMMAND
 from frc_utils import ENABLED
-
-import rospy
-from std_msgs.msg import Int32
 
 logger = logging.getLogger(__name__)
 
@@ -105,7 +103,7 @@ def publish_calibration(calibration, userdata):
         userdata[CALIB_RATE].sleep()
 
 
-if __name__ == "__main__":
+def main():
     # Parse CLI args
     parser = argparse.ArgumentParser()
     cli.device_id(parser)
@@ -151,3 +149,7 @@ if __name__ == "__main__":
             stopped = True
 
     logger.info("Exiting...")
+
+
+if __name__ == "__main__":
+    main()
