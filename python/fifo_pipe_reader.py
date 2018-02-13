@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 FIFO_NAME = "fifo_name"
 
 
-def fif_name(p):
+def fifo_name(p):
     return p.add_argument("-f", "--fifo", dest=FIFO_NAME, required=True, help="Fifo pipe name")
 
 
@@ -61,7 +61,7 @@ def main():
     # Parse CLI args
     args = setup_cli_args(ImageServer.args,
                           cli.camera_name_optional,
-                          fif_name,
+                          fifo_name,
                           cli.log_level)
 
     # Setup logging
