@@ -6,32 +6,28 @@ import logging
 import arc852.cli_args as cli
 from arc852.constants import *
 from arc852.moving_average import MovingAverage
-from arc852.out_of_range_values import OutOfRangeValues
 from arc852.serial_reader import SerialReader
-from arc852.utils import setup_logging, waitForKeyboardInterrupt
+from arc852.utils import setup_logging, sleep
 
 import frc_utils
 from frc_utils import *
 
 import rospy
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, Bool, String
+
+SHORT_LIDAR_PUB = "short_lidar_pub"
+SHORT_LIDAR_RATE = "short_lidar_rate"
+HEALTH_PUB = "health_pub"
+HEALTH_RATE = "health_rate"
 
 TOLERANCE_THRESH = 5
 USE_AVG = False
 
 logger = logging.getLogger(__name__)
 
-
 def fetch_data(mm_str, userdata):
-    print('Enter fetch data function')
-    publisher = userdata[ROS_PUBLISHER]
-    moving_avg = userdata[MOVING_AVERAGE]
-    oor_values = userdata[OOR_VALUES]
-    oor_upper = userdata[OOR_UPPER]
-    rate = userdata[ROS_RATE]
-
     if not userdata[frc_utils.ENABLED]:
-        print("User data doesn't exist")
+        logger.info("Not enabled")
         return
 
     # Values sometimes get compacted together, take the later value if that happens since it's newer
@@ -39,34 +35,33 @@ def fetch_data(mm_str, userdata):
         mm_str = mm_str.split("\r")[1]
 
     mm = int(mm_str)
-    print('Made mm a string')
 
-    # if oor_upper > 0 and (mm <= 155 or mm > oor_upper):
-    #     # Filter out bad data
-    #     oor_values.mark()
-    #     if oor_values.is_out_of_range(userdata[OOR_TIME]):
-    #         oor_values.clear()
-    #         print("out of range")
-    #         publisher.publish(ROS_OOR)
-    #         print("Publish out of range")
-    #         rate.sleep()
-    # else:
     if USE_AVG:
-        moving_avg.add(mm)
-        avg = moving_avg.average()
+        userdata[MOVING_AVERAGE].add(mm)
+        avg = userdata[MOVING_AVERAGE].average()
+
         if not avg or abs(mm - avg) > TOLERANCE_THRESH:
-            print("trying to publish")
-            publisher.publish(mm)
-            print('Published data to ros')
-            rate.sleep()
+            publisher(mm, userdata)
+            logger.info("Published {} mm".format(mm))
         else:
-            "Average isn't working"
+            logger.info("Not publishing anything, lower than tolerance threshold {}".format(TOLERANCE_THRESH))
+
+    elif mm > 8000:
+        publisher(-1, userdata)
+        logger.info("Published out of range (-1) to topic {}".format(userdata[TOPIC]))
     else:
-        print('trying to publish')
-        print(publisher)
-        publisher.publish(mm)
-        print('Publish')
-        rate.sleep()
+        publisher(mm, userdata)
+        logger.info("Published {} mm to topic {}".format(mm, userdata[TOPIC]))
+
+
+def publisher(message, userdata):
+    userdata[SHORT_LIDAR_PUB].publish(message)
+    userdata[SHORT_LIDAR_RATE].sleep()
+
+# def health_check_publisher(message, userdata):
+#     userdata[HEALTH_PUB].publish(message)
+#     userdata[HEALTH_RATE].sleep()
+
 
 
 if __name__ == "__main__":
@@ -75,37 +70,49 @@ if __name__ == "__main__":
     cli.device_id(parser)
     cli.serial_port(parser)
     cli.baud_rate(parser)
-    cli.oor_size(parser)
-    cli.oor_time(parser)
-    cli.oor_upper(parser)
+    #cli.oor_size(parser)
+    #cli.oor_time(parser)
+    #cli.oor_upper(parser)
     parser.add_argument("-d", "--device", dest=DEVICE, required=True, help="Device ('left' or 'right'")
-    cli.log_level(parser)
+    cli.verbose(parser)
     args = vars(parser.parse_args())
-    print('Parsed all args')
+
     # Setup logging
     setup_logging(level=args[LOG_LEVEL])
+    logger.info("Parsed Args")
+
     rospy.init_node('short_lidar_publisher')
-    pub = rospy.Publisher('short_lidar', Int32, queue_size=10)
-    rate = rospy.Rate(2)
-    print('Setup publisher')
-    userdata = {TOPIC: "lidar/{0}/mm".format(args[DEVICE]),
+    pub = rospy.Publisher("short_lidar/{0}/mm".format(args[DEVICE]), Int32, queue_size=10)
+    rate = rospy.Rate(20)
+    health_pub = rospy.Publisher("short_lidar/{0}/health".format(args[DEVICE]), Bool, queue_size=10)
+    health_rate = rospy.Rate(2)
+
+    logger.info("Setup Publishers")
+
+    userdata = {SHORT_LIDAR_PUB: pub,
+                SHORT_LIDAR_RATE: rate,
+                HEALTH_PUB: health_pub,
+                HEALTH_RATE: health_rate,
                 COMMAND: "lidar/{0}/command".format(args[DEVICE]),
                 ENABLED: True,
                 MOVING_AVERAGE: MovingAverage(size=3),
-                OOR_VALUES: OutOfRangeValues(size=args[OOR_SIZE]),
-                OOR_TIME: args[OOR_TIME],
-                OOR_UPPER: args[OOR_UPPER],
-                ROS_PUBLISHER: pub,
-                ROS_RATE: rate
+                #OOR_VALUES: OutOfRangeValues(size=args[OOR_SIZE]),
+                #OOR_TIME: args[OOR_TIME],
+                #OOR_UPPER: args[OOR_UPPER],
                 }
-    print('Defined userdata')
-    print('Opening serial with port: ' + SerialReader.lookup_port(args[DEVICE_ID]))
+
+    logger.info("Opened serial port: " + SerialReader.lookup_port(args[DEVICE_ID]))
 
     with SerialReader(func=fetch_data,
                       userdata=userdata,
                       port=SerialReader.lookup_port(args[DEVICE_ID]) if args.get(DEVICE_ID) else args[SERIAL_PORT],
                       baudrate=args[BAUD_RATE],
                       debug=True):
-        waitForKeyboardInterrupt()
+        try:
+            sleep()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            stopped = True
 
-    print("Exiting...")
+    logger.info("Exiting...")
