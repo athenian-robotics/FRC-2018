@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import argparse
-import logging
 
 import arc852.cli_args as cli
+import rospy
 from arc852.constants import *
 from arc852.moving_average import MovingAverage
 from arc852.serial_reader import SerialReader
 from arc852.utils import setup_logging, sleep
+from std_msgs.msg import Int32, Bool
 
 import frc_utils
 from frc_utils import *
-
-import rospy
-from std_msgs.msg import Int32, Bool, String
 
 SHORT_LIDAR_PUB = "short_lidar_pub"
 SHORT_LIDAR_RATE = "short_lidar_rate"
