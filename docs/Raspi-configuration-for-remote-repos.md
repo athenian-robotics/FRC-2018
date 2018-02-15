@@ -33,6 +33,41 @@ Push to the Raspi:
 ```bash
 $ git push raspiXX master
 ```
+### Nvidia Vision Repo
+
+Setup a bare repo and a source directory:
+
+```bash
+$ cd ~/git
+$ mkdir 2018-Vision
+$ mkdir 2018-Vision.git
+$ git init --bare ~/git/2018-Vision.git
+```
+
+Edit *2018-Vision.git/hooks/post-receive* and put this into it: 
+
+```bash
+#!/usr/bin/env sh
+git --work-tree=/home/nvidia/git/2018-Vision --git-dir=/home/nvidia/git/2018-Vision.git checkout -f
+echo "*** Updated FRC-2018 ***" >&2
+```
+**Warning** Use the absolute pathnames here.
+
+Make *post-receive* executable:
+```bash
+$ chmod +x ~/git2018-Vision.git/hooks/post-receive
+```
+Adjust the git config on your Mac (change Nvidia to your Nvidia hostname):
+
+```bash
+$ cd ~/git/2018-Vision
+$ git remote add tegra nvidia@tegra-ubuntu.local:/home/nvidia/git/FRC-2018.git
+```
+
+Push to the Nvidia:
+```bash
+$ git push Nvidia master
+```
 
 ### common-robotics Repo
 

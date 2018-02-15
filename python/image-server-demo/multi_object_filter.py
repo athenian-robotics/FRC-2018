@@ -12,10 +12,7 @@ class MultiObjectFilter(GenericFilter):
     args = [cli.so_topic, cli.bgr, cli.hsv_range, cli.minimum_pixels,
             cli.draw_line, cli.draw_contour, cli.draw_box, cli.max_objects]
 
-    def __init__(self,
-                 tracker,
-                 so_topic,
-                 maximum_objects=MAXIMUM_OBJECTS_DEFAULT,
+    def __init__(self, tracker, so_topic, maximum_objects=MAXIMUM_OBJECTS_DEFAULT,
                  *args, **kwargs):
         super(MultiObjectFilter, self).__init__(tracker, *args, **kwargs)
         self.__max_objects = maximum_objects
