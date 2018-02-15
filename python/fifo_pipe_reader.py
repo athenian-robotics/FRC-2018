@@ -18,23 +18,32 @@ from arc852.utils import setup_logging, sleep
 logger = logging.getLogger(__name__)
 
 FIFO_NAME = "fifo_name"
+FIFO_VERBOSE = "fifo_verbose"
 
 
-def fifo_name(p):
-    return p.add_argument("-f", "--fifo", dest=FIFO_NAME, required=True, help="Fifo pipe name")
+def fifo_name_option(p):
+    return p.add_argument("-f", "--fifo", dest=FIFO_NAME, required=True, help="FIFO pipe name")
+
+
+def fifo_verbose(p):
+    return p.add_argument("--fifo_verbose", dest=FIFO_VERBOSE, default=False, action="store_true",
+                          help="FIFO verbose [false]")
 
 
 class FifoReader(object):
-    def __init__(self, image_server, fifo_name):
+    def __init__(self, image_server, fifo_name, fifo_verbose=False):
         self.__image_server = image_server
         self.__fifo_name = fifo_name
+        self.__fifo_verbose = fifo_verbose
         self.__stopped = False
 
     def read_fifo(self, image_server):
         while not self.__stopped:
-            logger.info("Opening FIFO...")
+            if self.__fifo_verbose:
+                logger.info("Opening FIFO...")
             with open(self.__fifo_name) as fifo:
-                logger.info("FIFO opened")
+                if self.__fifo_verbose:
+                    logger.info("FIFO opened")
                 while not self.__stopped:
                     data = fifo.read()
                     if len(data) == 0:
@@ -62,7 +71,8 @@ def main():
     # Parse CLI args
     args = setup_cli_args(ImageServer.args,
                           cli.camera_name_optional,
-                          fifo_name,
+                          fifo_name_option,
+                          fifo_verbose,
                           cli.log_level)
 
     # Setup logging
@@ -75,7 +85,7 @@ def main():
                                http_port=args[HTTP_PORT],
                                http_delay_secs=args[HTTP_DELAY_SECS],
                                http_verbose=args[HTTP_VERBOSE])
-    fifo_reader = FifoReader(image_server, args[FIFO_NAME])
+    fifo_reader = FifoReader(image_server=image_server, fifo_name=args[FIFO_NAME], fifo_verbose=args[FIFO_VERBOSE])
 
     try:
         image_server.start()
