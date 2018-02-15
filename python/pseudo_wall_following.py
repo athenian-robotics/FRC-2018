@@ -7,7 +7,7 @@ def navigate(current_dist, target_dist, orientation):
     # > 0 when outside of parallel but turned toward target       // Going to intersect
 
     error = current_dist - target_dist
-    threshold = 10
+    dist_from_target_threshold = 10
 
     minimum_angular_when_not_intersecting = .4
     maximum_angular_when_not_intersecting = .8
@@ -25,7 +25,7 @@ def navigate(current_dist, target_dist, orientation):
     maximum_linear_when_intersecting = .7
 
     # Outside the target distance
-    if error > threshold:
+    if error > dist_from_target_threshold:
         # Robot is parallel or point away from target line
         if orientation >= 0:
             # Not intersecting
@@ -48,7 +48,7 @@ def navigate(current_dist, target_dist, orientation):
             pass
 
     # Inside the target distance
-    elif error < -threshold:
+    elif error < -dist_from_target_threshold:
         # Robot is parallel or point away from target line
         if orientation <= 0:
             # Not intersecting
