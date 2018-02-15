@@ -54,9 +54,11 @@ class FifoReader(object):
         # Make sure named pip exists. If not create it.
         try:
             os.mkfifo(self.__fifo_name)
+            logger.info("Created FIFO {0}".format(self.__fifo_name))
         except OSError as oe:
             if oe.errno != errno.EEXIST:
                 raise
+            logger.info("Reading FIFO {0}".format(self.__fifo_name))
 
         logger.info("Starting FIFO reader...")
         fifo_thread = Thread(target=self.read_fifo, kwargs={"image_server": self.__image_server})
