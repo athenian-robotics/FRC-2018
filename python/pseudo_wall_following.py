@@ -27,7 +27,7 @@ def navigate(current_dist, target_dist, orientation):
     # Outside the target distance
     if error > threshold:
         # Robot is parallel or point away from target line
-        if orientation >= 0:
+        if orientation > threshold:
             # Not intersecting
             # A robot pointed far away from target line will almost rotate in place until it gets to parallel
             # Angular is more dominant in this position
@@ -48,7 +48,7 @@ def navigate(current_dist, target_dist, orientation):
             pass
 
     # Inside the target distance
-    elif error < threshold:
+    elif error < -threshold:
         # Robot is parallel or point away from target line
         if orientation <= 0:
             # Not intersecting
