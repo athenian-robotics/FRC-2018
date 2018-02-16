@@ -76,7 +76,7 @@ def navigate(current_dist, target_dist, orientation):
 
     # Correct distance from the wall
     else:
-        if orientation < orientation_threshold:
+        if orientation < -orientation_threshold:
             # Turn right proportional to orientation
             # Angular will scale between minimum_angular_when_parallel and maximum_angular_when_parallel
             # Linear is inversely proportional to orientation
