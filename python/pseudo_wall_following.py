@@ -8,6 +8,7 @@ def navigate(current_dist, target_dist, orientation):
 
     error = current_dist - target_dist
     dist_from_target_threshold = 10
+    orientation_threshold = 2
 
     minimum_angular_when_not_intersecting = .4
     maximum_angular_when_not_intersecting = .8
@@ -24,10 +25,13 @@ def navigate(current_dist, target_dist, orientation):
     minimum_linear_when_intersecting = .5
     maximum_linear_when_intersecting = .7
 
+    minimum_linear_when_parallel = .4
+    maximum_linear_when_parallel = .6
+
     # Outside the target distance
     if error > dist_from_target_threshold:
         # Robot is parallel or point away from target line
-        if orientation >= 0:
+        if orientation >= orientation_threshold:
             # Not intersecting
             # A robot pointed far away from target line will almost rotate in place until it gets to parallel
             # Angular is more dominant in this position
@@ -50,7 +54,7 @@ def navigate(current_dist, target_dist, orientation):
     # Inside the target distance
     elif error < -dist_from_target_threshold:
         # Robot is parallel or point away from target line
-        if orientation <= 0:
+        if orientation <= orientation_threshold:
             # Not intersecting
             # A robot pointed far away from target line will almost rotate in place until it gets to parallel
             # Angular is more dominant in this position
@@ -72,6 +76,20 @@ def navigate(current_dist, target_dist, orientation):
 
     # Correct distance from the wall
     else:
-        # Robot can go linear as fast as you want and minimal angular
-        # Angular will scale between minimum_angular_when_parallel and maximum_angular_when_parallel
-        pass
+        if orientation < orientation_threshold:
+            # Turn right proportional to orientation
+            # Angular will scale between minimum_angular_when_parallel and maximum_angular_when_parallel
+            # Linear is inversely proportional to orientation
+            # Linear will scale between minimum_linear_when_parallel and maximum_linear_when_parallel
+            pass
+        elif orientation > orientation_threshold:
+            # Turn left proportional to orientation
+            # Angular will scale between minimum_angular_when_parallel and maximum_angular_when_parallel
+            # Linear is inversely proportional to orientation
+            # Linear will scale between minimum_linear_when_parallel and maximum_linear_when_parallel
+            pass
+        else:
+            # This is the goal position
+            # Robot can go linear as fast as you want and minimal angular
+            # Angular will scale between minimum_angular_when_parallel and maximum_angular_when_parallel
+            pass
