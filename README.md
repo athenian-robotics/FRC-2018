@@ -28,4 +28,4 @@
 
 ## Device Configurations
 * [Port config](docs/port-config.md)
-* [IP Networking](ip)
+* [IP Networking](docs/ip-config.md)
