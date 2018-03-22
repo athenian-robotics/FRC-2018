@@ -19,7 +19,24 @@ Subnet: ```255.0.0.0```
 ### rospi2
 ```10.8.52.12```
 ## How to Assign IP Addresses
-(Coming soon)
+This is how the file ```/etc/network/interfaces``` should look:
+```angular2html
+source-directory /etc/network/interfaces.d
+
+
+auto lo
+iface lo inet loopback
+
+
+allow-hotplug enx*
+iface enx* inet static #Replace enx* with what shows up in ifconfig
+address  10.8.52.* #Replace * with correct number 
+netmask 255.255.255.0
+gateway 10.8.52.1
+
+```
+
+After making the changes, run `sudo ifdown enx*` and `sudo ifup enx*`.
 
 
 
