@@ -10,3 +10,6 @@ For ROS, we will be using ```Port 5800```. To change the port, the following cha
 
 ## Video Streaming 
 ```Port 5802```
+
+## Health Check
+```Port 5803```
