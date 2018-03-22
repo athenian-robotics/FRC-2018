@@ -28,4 +28,4 @@
 
 ## Raspberry Pi Config\
 * [Setting the Roscore port](docs/port-config.md)
-* [Static IP Change (comming soon)]()
+* [Static IP Change (coming soon)]()
